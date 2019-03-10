@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端图片预加载</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body,.load{
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+        .load{
+            position: relative;
+        }
+        .load-start{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 569px;
+            height: 98px;
+            background: url('./imgs/load-startbg.png') no-repeat 
+            center / 569px 98px; 
+        }
+        .num1{
+            position: absolute;
+            right: 200px;
+            top: 24px;
+            width: 44px;
+            height: 60px;
+            background: url('./imgs/all-num.png') no-repeat -47px -56px / 684px 185px;
+        }
+        .num2{
+            position: absolute;
+            right: 150px;
+            top: 24px;
+            width: 44px;
+            height: 60px;
+            background: url('./imgs/all-num.png') no-repeat -47px -56px / 684px 185px;
+        }
+        .percent{
+            position: absolute;
+            right: 100px;
+            top: 27px;
+            width: 44px;
+            height: 60px;
+            background: url('./imgs/percent.png') no-repeat -129px -42px / 223px 155px;
+        }
+        .load-end{
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 569px;
+            height: 98px;
+            background: url('./imgs/load-end.png') no-repeat 
+            center / 569px 98px; 
+        }
+    </style>
+</head>
+<body>
+   <div class="load">
+       <div class="load-start">
+            <div class="num1"></div>
+            <div class="num2"></div>
+            <div class="percent"></div>
+       </div>
+       <div class="load-end"></div>
+   </div>
+</body>
+</html>
+<script>
+    // 这里节省时间，我人工手动在前面预加载这个三个loading动画的素材
+    // 实际开发可以完善那个nodefs模块，或者分文件区分，分成多个imgList进行加载。
+    let imglist = [{name: 'loadingStartBg', url: 'load-startbg.png'},{name: 'allNum', url: 'all-num.png'},{name: 'percent', url: 'percent.png'},{name: 'loadEnd', url: 'load-end.png'},{name: 'AKM', url: 'AKM.png'},{name: 'AUG', url: 'AUG.png'},{name: 'AWM', url: 'AWM.png'},{name: 'crossbow', url: 'crossbow.png'},{name: 'Crowbar', url: 'Crowbar.png'},{name: 'DP-28', url: 'DP-28.png'},{name: 'G36C', url: 'G36C.png'},{name: 'Groza', url: 'Groza.png'},{name: 'Kar98k', url: 'Kar98k.png'},{name: 'M16A4', url: 'M16A4.png'},{name: 'M24', url: 'M24.png'},{name: 'M249', url: 'M249.png'},{name: 'M416', url: 'M416.png'},{name: 'M762', url: 'M762.png'},{name: 'Machete', url: 'Machete.png'},{name: 'Micro-UZI', url: 'Micro-UZI.png'},{name: 'Mini14', url: 'Mini14.png'},{name: 'Mk14', url: 'Mk14.png'},{name: 'MK47', url: 'MK47.png'},{name: 'P18C', url: 'P18C.png'},{name: 'p1911', url: 'p1911.png'},{name: 'P92', url: 'P92.png'},{name: 'Pan', url: 'Pan.png'},{name: 'QBU', url: 'QBU.png'},{name: 'QBZ', url: 'QBZ.png'},{name: 'R1895', url: 'R1895.png'},{name: 'R45', url: 'R45.png'},{name: 'S12K', url: 'S12K.png'},{name: 'S1897', url: 'S1897.png'},{name: 'S686', url: 'S686.png'},{name: 'Sawed-off', url: 'Sawed-off.png'},{name: 'SCAR-L', url: 'SCAR-L.png'},{name: 'Scorpion', url: 'Scorpion.png'},{name: 'Sickle', url: 'Sickle.png'},{name: 'Signal', url: 'Signal.png'},{name: 'SKS', url: 'SKS.png'},{name: 'SLR', url: 'SLR.png'},{name: 'Thomson', url: 'Thomson.png'},{name: 'UMP9', url: 'UMP9.png'},{name: 'Vector', url: 'Vector.png'},{name: 'VSS', url: 'VSS.png'},{name: 'win94', url: 'win94.png'}];
+    let length = imglist.length;
+    let images = new Array(); // 定义一个数组容器，用来存储预加载完成的图片
+    // let loadEl = document.querySelector('.loading');
+    let loadStart = document.querySelector('.load-start');
+    let loadEnd = document.querySelector('.load-end');
+    let num1 = document.querySelector('.num1');
+    let num2 = document.querySelector('.num2');
+    function preload () {
+        let count = 0; // 计算器，计算加载了多少图片
+        for (let i = 0; i < length; i++) {
+            images[i] = new Image();
+            images[i].src = `./imgs/${imglist[i].url}`; 
+            // 谷歌浏览器高版本支持大部分ES6，所以这里就不用字符串拼接了。
+            images[i].onload = function () {
+                count++;
+                if (count === length) {
+                   loadStart.style.display = 'none';
+                   loadEnd.style.display = 'block';
+                   loadEnd.onclick = function () {
+                       alert('恭喜学习图片预加载！');
+                   }
+                } else {
+                    // loadEl.innerHTML = '正在加载中';
+                    // loadEl.innerHTML = `正在加载中${Math.round(count / length * 100)}%`;
+                    let text = Math.round(count / length * 100);
+                    let text1 = parseInt(text / 10);
+                    let text2 = parseInt(text % 10);
+                    console.log(text1, text2);
+                    num1.style.backgroundPositionX = `${-47 + text1 * -60}px`
+                    num2.style.backgroundPositionX = `${-47 + text2 * -60}px`
+                }
+            }
+        }
+    }
+    preload();
+</script>
