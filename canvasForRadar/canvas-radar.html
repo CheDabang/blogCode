@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            display: block;
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas class="radar"></canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.getElementsByClassName('radar')[0];
+    canvas.width = 500;
+    canvas.height = 500;
+    var ctx = canvas.getContext('2d');
+    // ctx.translate(canvas.width/2,canvas.width/2);
+    // ctx.rotate(-90 * Math.PI / 180);
+    // ctx.translate(-canvas.width/2,-canvas.width/2);
+    var rData = [
+        ['KDA', 'B'],
+        ['输出', 'S'],
+        ['经济', 'S'],
+        ['生存', 'S'],
+        ['推进', 'S'],
+        ['打野', 'B']
+    ]
+    var letterData = {
+        'S': 1,
+        'A': 1.5,
+        'B': 2,
+        'C': 2.5,
+        'D': 3
+    }
+    ctx.save();
+    ctx.strokeStyle = '#888888';
+    var lineArr = [];
+    var rAngle = Math.PI * 2 / 6;
+    var rCenter = 250;
+    var curR = 100;
+    var fontSize = 16;
+    ctx.beginPath();
+    for (var i = 0; i < 6; i++) {
+        lineArr[i] = {};
+        // var x = rCenter + curR * Math.cos(rAngle * i);
+        // var y = rCenter + curR * Math.sin(rAngle * i);
+        lineArr[i].y = rCenter + curR * Math.cos(rAngle * i);
+        lineArr[i].x = rCenter + curR * Math.sin(rAngle * i);
+        ctx.lineTo(lineArr[i].x, lineArr[i].y);
+    }
+    console.log(lineArr);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+    // 绘制对角线
+    ctx.strokeStyle = '#e8ddc7';
+    ctx.save();
+    ctx.beginPath();
+    // for (var j = 0; j < 3; j++) {
+    //     ctx.lineTo(lineArr[j].x, lineArr[j].y);
+    //     ctx.lineTo(lineArr[j+3].x, lineArr[j+3].y);
+    //     ctx.stroke();
+    // }
+    for (var j = 0; j < 3; j++) {
+        ctx.moveTo(lineArr[j].x, lineArr[j].y);
+        ctx.lineTo(lineArr[j + 3].x, lineArr[j + 3].y);
+        ctx.stroke();
+    }
+    ctx.closePath();
+    ctx.restore();
+    // ctx.translate(canvas.width/2,canvas.width/2);
+    // ctx.rotate(30 * Math.PI / 180);
+    // ctx.translate(-canvas.width/2,-canvas.width/2);
+    // 绘制数据区域
+    ctx.save();
+    ctx.beginPath();
+    for (var i = 0; i < 6; i++) {
+        lineArr[i].yEnd = rCenter + curR * Math.cos(rAngle * i) / (letterData[rData[i][1]]);
+        lineArr[i].xEnd = rCenter + curR * Math.sin(rAngle * i) / (letterData[rData[i][1]]);
+        ctx.lineTo(lineArr[i].xEnd, lineArr[i].yEnd);
+        console.log(lineArr);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+    ctx.fill();
+    ctx.restore();
+    // 绘制文本
+    ctx.save();
+    var fontSize = 16;
+    var maxfontSize = 30;
+    ctx.font = fontSize + 'px Microsoft Yahei';
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    for (var i = 0; i < 6; i++) {
+        var y = rCenter + curR * Math.cos(rAngle * i);
+        var x = rCenter + curR * Math.sin(rAngle * i);
+        console.log(Math.sin(rAngle * i))
+        var s_width = ctx.measureText(rData[i][0]).width;
+        if (x == rCenter) {
+            if (y > rCenter) {
+                ctx.fillText(rData[i][0], x - s_width / 2, y + fontSize);
+            } else {
+                ctx.fillText(rData[i][0], x - s_width / 2, y - fontSize);
+            }
+        } else if (x > rCenter) {
+            console.log(rData[i][0]);
+            ctx.fillText(rData[i][0], x + s_width * 1.5, y);
+        } else {
+            ctx.fillText(rData[i][0], x - s_width * 1.5, y);
+        }
+    }
+    ctx.restore();
+    ctx.save();
+    // 绘制等级
+    ctx.font = '30px Microsoft Yahei bold';
+    ctx.fillStyle = '#d7431f';
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    for (var i = 0; i < 6; i++) {
+        var y = rCenter + curR * Math.cos(rAngle * i);
+        var x = rCenter + curR * Math.sin(rAngle * i);
+        var M_width = ctx.measureText(rData[i][1]).width;
+        if (x == rCenter) {
+            if (y > rCenter) {
+                ctx.fillText(rData[i][1], x + M_width / 2, y + fontSize);
+            } else {
+                ctx.fillText(rData[i][1], x + M_width / 2, y - fontSize);
+            }
+        } else if (x > rCenter) {
+            console.log(rData[i][0]);
+            ctx.fillText(rData[i][1], x + M_width, y);
+        } else {
+            ctx.fillText(rData[i][1], x - M_width, y);
+        }
+    }
+    ctx.restore();
+    ctx.save();
+    ctx.restore();
+</script>
