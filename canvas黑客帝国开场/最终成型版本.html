@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <meta charset="UTF-8">
+      <title>车大棒浅谈for循环+canvas实现黑客帝国矩形阵</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+      <style type="text/css">
+            * {
+                  margin: 0;
+                  padding: 0;
+                  /*粗暴的清楚公共样式，正式工作场合不建议使用。你要用，那你开心就好！*/
+            }
+
+            .top {
+                  background: #2c3c51;
+            }
+            html,body{
+                  width: 100%;
+                  height: 100%;
+            }
+            .top div {
+                  width: 100%;
+                  text-align: center;
+                  font-size: 16px;
+                  color: #1291a8;
+                  font-family: "微软雅黑";
+                  line-height: 40px;
+            }
+            .logo{
+                  display: flex;
+                  align-items: center; /*垂直居中*/
+                  justify-content: center; /*水平居中*/
+                  height: 60px;
+                  width: 100%;
+            }
+            img {
+                  width: 120px;
+            }
+      </style>
+</head>
+
+<body>
+      <div class="top">
+            <div class="clearfix w">
+                  <div class="logo">
+                        <img src="./imgs/chedabang.png" />
+                  </div>
+                  <div class="title">
+                        吾虽浪迹天涯，却未迷失本心
+                  </div>
+            </div>
+      </div>
+
+      <div class="cont">
+            <canvas id="hacker" width="500" height="500">请使用最新的浏览器</canvas>
+      </div>
+</body>
+
+</html>
+<script type="text/javascript">
+      window.onload = function () { 
+            // var resize = function () {
+            //       var hacker = document.getElementById("hacker");
+            //       var width = hacker.width = screen.width;
+            //       var height = hacker.height = screen.height * 0.8;
+            // }
+            // $(window).resize(function() {
+            //       $('span').text(x+=1);
+            // });
+            var hacker = null;
+            var width = null;
+            var height = null;
+            var num = null;
+            var y = null;
+            (function (doc, win) {
+                  var rszEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+                  var docEl = doc.documentElement;
+                  var reCalc = function () {
+                        hacker = doc.getElementById("hacker");
+                        width = hacker.width = docEl.clientWidth;
+                        height = hacker.height = docEl.clientHeight - 100;
+                        console.log(width,height);
+                        hacker.style.width = width + 'px';
+                        hacker.style.height = height + 'px';
+                        num = Math.ceil(width / 10);
+                        y = Array(num).join(0).split('');
+                        console.log(num);
+                  }
+                  reCalc()
+                  if (!doc.addEventListener) return;
+                  win.addEventListener(rszEvt, reCalc);
+            })(document, window)
+            var ctx = hacker.getContext('2d');
+            var draw = function () {
+                  ctx.fillStyle = 'rgba(0,0,0,.05)';
+                  ctx.fillRect(0, 0, width, height);
+                  ctx.fillStyle = '#0f0';
+                  ctx.font = '10px Microsoft YaHei';
+                  for (i = 0; i < num; i++) {
+                        var x = (i * 10) + 10;
+                        text = String.fromCharCode(65 + Math.random() * 62);
+                        var y1 = y[i];
+                        ctx.fillText(text, x, y1);
+                        if (y1 > Math.random() * 10 * height) {
+                              y[i] = 0;
+                        } else {
+                              y[i] = parseInt(y[i]) + 10;
+                        }
+
+                  }
+
+            }
+
+            Run();
+
+            function Run() {
+                  Game_Interval = setInterval(draw, 30);
+            }
+      }
+</script>
