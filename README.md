@@ -6,9 +6,12 @@
 然后以前的blog旧代码，本人逐渐的整理梳理当中。
 
 ## 目录
-+ preload： 快乐前端--图片预加载完整演示demo
 
 + canvas黑客帝国开场： 手撸canvas+for循环实现电影《黑客帝国》当中代码雨的特效
+
++ canvasForRadar: canvas实现手游《王者荣耀》一个战绩雷达图
+
++ preload： 快乐前端--图片预加载完整演示demo
 
 ## 心得：
 
