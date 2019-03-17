@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>step函数演练</title>
+    <style>
+        .step-box {
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* demo1的样式 */
+        .hi {
+            width: 50px;
+            height: 72px;
+            /* 矩形的宽高 */
+            background-image: url("./imgs/sprite-steps.png");
+            animation: play .8s steps(10) infinite;
+            /* 分10步完成0到-500px完成并无限重复 */
+        }
+
+        @keyframes play {
+            from {
+                background-position: 0px;
+            }
+
+            to {
+                background-position: -500px;
+            }
+        }
+
+        /* demo2的样式 */
+        .time {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            background: #000;
+            width: 303px;
+            height: 70px;
+        }
+
+        .num {
+            margin: 0 4px;
+            width: 28px;
+            height: 70px;
+            background: url(imgs/timeNum.webp) no-repeat center;
+            background-size: cover;
+            background-position: -10px 0;
+        }
+
+        .spot {
+            /* position: absolute;
+            top: 0.06rem;
+            left: 1.70rem; */
+            color: #fff;
+            font-size: 24px;
+            line-height: 70px;
+            margin: 0 10px;
+        }
+
+        .s10 {
+            left: 90px;
+            -webkit-animation: sMove 100s steps(10, start);
+        }
+
+        .s0 {
+            left: 1.25rem;
+            -webkit-animation: sMove 10s steps(10, start) infinite;
+        }
+
+        .ms0 {
+            left: 2rem;
+            -webkit-animation: sMove 1s steps(10, start) infinite;
+        }
+
+        .ms10 {
+            left: 230px;
+            -webkit-animation: sMove 100ms steps(10, start) infinite;
+        }
+
+        @-webkit-keyframes sMove {
+            0% {
+                background-position: -290px 0;
+            }
+
+            100% {
+                background-position: -10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="step-box">
+        <h1>demo1</h1>
+        <h2>招手的吉祥物</h1>
+            <div class="hi"></div>
+            <h1 class="demo2">demo2</h1>
+            <h2>CSS3实现倒计时</h2>
+            <div class="time">
+                <div class="s10 num"></div>
+                <div class="s0 num"></div>
+                <div class="spot">:</div>
+                <div class="ms0 num"></div>
+                <div class="ms10 num"></div>
+            </div>
+    </div>
+
+</body>
+
+</html>
