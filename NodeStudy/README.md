@@ -14,3 +14,5 @@
     - ECMAScript 基本的 JavaScript语言部分
     - 打破了过去JavaScript只能在浏览器中运行的局面，运行环境方向扩大
     - 浏览器是无法识别在Node上面运行的JavaScript代码
+
++ 
