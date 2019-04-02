@@ -12,7 +12,7 @@
 + Node中的JavaScript
     - 没有BOM、DOM
     - ECMAScript 基本的 JavaScript语言部分
-    - 打破了过去JavaScript只能在浏览器中运行的局面，运行环境方向扩大
+    - 打破次元壁垒，可以在服务器商快乐奔跑了。
     - 浏览器是无法识别在Node上面运行的JavaScript代码
 
 + 
