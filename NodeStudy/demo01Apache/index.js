@@ -1,6 +1,7 @@
 // 1、加载模块
 let http = require('http');
 let fs = require('fs');
+var path = require('path')
 // 用来获取机器信息的
 // var os = require('os');
 // var path = require('path');
@@ -23,8 +24,8 @@ let server = http.createServer();
 server.on('request', function (request, response) {
   // response 对象有一个方法：write 可以用来给客户端发送响应数据
   // write 可以使用多次，但是最后一定要使用 end 来结束响应，否则客户端会一直等待
-  console.log('收到请求了，请求路径是：' + request.url)
-  console.log('请求我的客户端的地址是：', request.socket.remoteAddress, request.socket.remotePort)
+  // console.log('收到请求了，请求路径是：' + request.url)
+  // console.log('请求我的客户端的地址是：', request.socket.remoteAddress, request.socket.remotePort)
   // response.write('hello')
   // response.write('nodejs')
 
@@ -89,32 +90,71 @@ server.on('request', function (request, response) {
   var wwwDir = 'f:/chedabang-demo/blogCodeGitHub/NodeStudy/demo01Apache/resource'
   // 新的一章，利用node fs模块读取文件列表
   // if (url === '/') {
-    fs.readFile('./index.html', function (err, data) {
-      if (err) {
-        return response.end('404 Not Found')
-      }
-      fs.readdir(wwwDir, function (err, files) {
-        console.log(111111111111)
+  // fs.readFile('./index.html', function (err, data) {
+  //   if (err) {
+  //     return response.end('404 Not Found')
+  //   }
+  //   fs.readdir(wwwDir, function (err, files) {
+  //     console.log(111111111111)
+  //     if (err) {
+  //       return response.end('Can not find www dir.')
+  //     }
+  //     // 2.1 生成需要替换的内容
+  //     var content = ''
+  //     console.log(files);
+  //     files.forEach(function (item) {
+  //       // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
+  //       content += `<li><a href="./resource/${item}">${item}</a></li>`
+  //     })
+
+  //     // 2.3 替换
+  //     data = data.toString()
+  //     console.log(content);
+  //     data = data.replace('<li></li>', content)
+
+  //     // 3. 发送解析替换过后的响应数据
+  //     response.end(data)
+  //   })
+  // })
+  var urlPath = path.join(wwwDir, url);
+  console.log(urlPath, 'urlPath')
+  fs.stat(urlPath, function (err, stats) {
+    if (err) {
+      return response.end('404 Not Found.')
+    }
+    if (stats.isFile()) {
+      fs.readFile(urlPath, function (err, data) {
         if (err) {
-          return response.end('Can not find www dir.')
+          return response.end('404 Not Found.')
         }
-        // 2.1 生成需要替换的内容
-        var content = ''
-        console.log(files);
-        files.forEach(function (item) {
-          // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
-          content += `<li><a href="./resource/${item}">${item}</a></li>`
-        })
-  
-        // 2.3 替换
-        data = data.toString()
-        console.log(content);
-        data = data.replace('<li></li>', content)
-  
-        // 3. 发送解析替换过后的响应数据
         response.end(data)
       })
-    })
+    } else if (stats.isDirectory()) {
+      // var templateStr = fs.readFileSync('./index.html').toString()
+      var files = fs.readdirSync(urlPath)
+      // var data = files.map(function (item) {
+      //   return {
+      //     url: 
+      //     name: 
+      //     type: 
+      //   }
+      // })
+      // var htmlStr = template.render(templateStr, {
+      //   files: files
+      // })
+      var content = '';
+      files.forEach(function (item) {
+        // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
+        content += `<li><a href="./resource/${item}">${item}</a></li>`
+      })
+
+      // 2.3 替换
+      // data = data.toString()
+      console.log(content);
+      // data = data.replace('<li></li>', content)
+      response.end(content)
+    }
+  })
   // }
 })
 server.listen(2333, function () {
