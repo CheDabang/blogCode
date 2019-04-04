@@ -117,7 +117,7 @@ server.on('request', function (request, response) {
   //   })
   // })
   var urlPath = path.join(wwwDir, url);
-  console.log(urlPath, 'urlPath')
+  console.log(urlPath, 'urlPath', url)
   fs.stat(urlPath, function (err, stats) {
     if (err) {
       return response.end('404 Not Found.')
@@ -130,7 +130,7 @@ server.on('request', function (request, response) {
         response.end(data)
       })
     } else if (stats.isDirectory()) {
-      // var templateStr = fs.readFileSync('./index.html').toString()
+      var templateStr = fs.readFileSync('./index.html').toString()
       var files = fs.readdirSync(urlPath)
       // var data = files.map(function (item) {
       //   return {
@@ -145,14 +145,20 @@ server.on('request', function (request, response) {
       var content = '';
       files.forEach(function (item) {
         // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
-        content += `<li><a href="./resource/${item}">${item}</a></li>`
+        if (url === '/') {
+          content += `<li><a href="./${item}">${item}</a></li>` 
+        } else {
+          content += `<li><a href=".${url}/${item}">${item}</a></li>` 
+        }
       })
 
       // 2.3 替换
       // data = data.toString()
-      console.log(content);
+      templateStr = templateStr.toString();
+      templateStr = templateStr.replace('<li></li>', content)
       // data = data.replace('<li></li>', content)
-      response.end(content)
+
+      response.end(templateStr)
     }
   })
   // }
