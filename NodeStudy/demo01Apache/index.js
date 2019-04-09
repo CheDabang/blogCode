@@ -1,19 +1,7 @@
 // 1、加载模块
 let http = require('http');
 let fs = require('fs');
-var path = require('path')
-// 用来获取机器信息的
-// var os = require('os');
-// var path = require('path');
-// 获取当前机器的 CPU 信息
-// console.log(os.cpus())
-
-// memory 内存
-// console.log(os.totalmem(), '内存')
-
-// 获取某个路径下面的,文件扩展名
-// console.log(path.extname('f:/chedabang-demo/blogCodeGitHub/NodeStudy/demo01Apache/test.txt'))
-
+let path = require('path')
 // 创建服务器
 let server = http.createServer();
 // request 请求事件处理函数，需要接收两个参数：
@@ -22,14 +10,11 @@ let server = http.createServer();
 //    Response 响应对象
 //        响应对象可以用来给客户端发送响应消息
 server.on('request', function (request, response) {
+  // http.createServer(function (request, response) {
   // response 对象有一个方法：write 可以用来给客户端发送响应数据
   // write 可以使用多次，但是最后一定要使用 end 来结束响应，否则客户端会一直等待
-  // console.log('收到请求了，请求路径是：' + request.url)
-  // console.log('请求我的客户端的地址是：', request.socket.remoteAddress, request.socket.remotePort)
-  // response.write('hello')
-  // response.write('nodejs')
 
-  // 告诉客户端，我的话说完了，你可以呈递给用户了
+
   // response.end()
 
   // 在服务端默认发送的数据，其实是 utf8 编码的内容
@@ -41,7 +26,7 @@ server.on('request', function (request, response) {
   // response.setHeader('Content-Type', 'text/plain; charset=utf-8')
   // response.end('hello 世界')
   // -----------------
-  var url = request.url;
+  let url = request.url;
   // if (url === '/plain') {
   //   // text/plain 就是普通文本
   //   response.setHeader('Content-Type', 'text/plain; charset=utf-8');
@@ -87,7 +72,7 @@ server.on('request', function (request, response) {
     })
   }
   */
-  var wwwDir = 'f:/chedabang-demo/blogCodeGitHub/NodeStudy/demo01Apache/resource'
+  let wwwDir = 'f:/chedabang-demo/blogCodeGitHub/NodeStudy/demo01Apache/www'
   // 新的一章，利用node fs模块读取文件列表
   // if (url === '/') {
   // fs.readFile('./index.html', function (err, data) {
@@ -100,7 +85,7 @@ server.on('request', function (request, response) {
   //       return response.end('Can not find www dir.')
   //     }
   //     // 2.1 生成需要替换的内容
-  //     var content = ''
+  //     let content = ''
   //     console.log(files);
   //     files.forEach(function (item) {
   //       // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
@@ -116,7 +101,7 @@ server.on('request', function (request, response) {
   //     response.end(data)
   //   })
   // })
-  var urlPath = path.join(wwwDir, url);
+  let urlPath = path.join(wwwDir, url);
   console.log(urlPath, 'urlPath', url)
   fs.stat(urlPath, function (err, stats) {
     if (err) {
@@ -130,19 +115,9 @@ server.on('request', function (request, response) {
         response.end(data)
       })
     } else if (stats.isDirectory()) {
-      var templateStr = fs.readFileSync('./index.html').toString()
-      var files = fs.readdirSync(urlPath)
-      // var data = files.map(function (item) {
-      //   return {
-      //     url: 
-      //     name: 
-      //     type: 
-      //   }
-      // })
-      // var htmlStr = template.render(templateStr, {
-      //   files: files
-      // })
-      var content = '';
+      let templateStr = fs.readFileSync('./template.html').toString()
+      let files = fs.readdirSync(urlPath)
+      let content = '';
       files.forEach(function (item) {
         // 在 EcmaScript 6 的 ` 字符串中，可以使用 ${} 来引用变量
         if (url === '/') {
@@ -154,15 +129,18 @@ server.on('request', function (request, response) {
 
       // 2.3 替换
       // data = data.toString()
-      templateStr = templateStr.toString();
-      templateStr = templateStr.replace('<li></li>', content)
+      templateStr = templateStr.toString().replace('<li></li>', content);
+      // templateStr = templateStr.replace('<li></li>', content)
       // data = data.replace('<li></li>', content)
 
       response.end(templateStr)
+      // 告诉客户端，我的话说完了，你可以呈递给用户了
     }
   })
   // }
-})
-server.listen(2333, function () {
-  console.log('启动成功，可以通过 http://127.0.0.1:2333/ 来访问')
-});
+}).listen(2333, function () {
+    console.log('启动成功，可以通过 http://127.0.0.1:2333/ 来访问')
+  });
+// server.listen(2333, function () {
+//   console.log('启动成功，可以通过 http://127.0.0.1:2333/ 来访问')
+// });
