@@ -72,7 +72,9 @@ server.on('request', function (request, response) {
     })
   }
   */
+   // 里需要换成自己电脑所在的文档路径
   let wwwDir = 'f:/chedabang-demo/blogCodeGitHub/NodeStudy/demo01Apache/www'
+
   // 新的一章，利用node fs模块读取文件列表
   // if (url === '/') {
   // fs.readFile('./index.html', function (err, data) {
