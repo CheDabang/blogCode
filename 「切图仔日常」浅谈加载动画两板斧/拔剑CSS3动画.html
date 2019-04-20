@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>忘忧镇拔剑CSS3动画</title>
+    <style>
+        .demo{
+            margin: 100px auto;
+            position: relative;
+            width: 1000px;
+            height: 200px;
+            background: #000;
+            overflow: hidden;
+        }
+        .left{
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 179px;
+            height: 60px;
+            background: url('./img/left.png') no-repeat center / contain;
+        }
+        .right{
+            position: absolute;
+            top: 52%;
+            left: -8px;
+            transform: translate3d(0, -50%, 0);
+            width: 370px;
+            height: 74px;
+            background: url('./img/right.png') no-repeat center / contain;
+            -webkit-animation: move 2s 0.5 ease both;
+            animation: move 2s 0.5s ease both;
+        }
+        @-webkit-keyframes move {
+            0%{
+                -webkit-transform: translate3d(0, -50%, 0);
+                transform: translate3d(0, -50%, 0);
+            }
+            100% {
+                -webkit-transform: translate3d(100px, -50%, 0);
+                transform: translate3d(100px, -50%, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>

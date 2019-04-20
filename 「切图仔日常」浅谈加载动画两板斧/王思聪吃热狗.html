@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>王思聪吃热狗</title>
+    <style>
+        .demo{
+            position: relative;
+            margin: 100px auto;
+            width: 800px;
+            height: 138px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        .wsc{
+            z-index: 1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 132px;
+            height: 138px;
+            background: url('./img/wsc.png') no-repeat;
+        }
+        .hot-dog{
+            position: absolute;
+            width: 103px;
+            height: 58px;
+            right: 0;
+            top: 35px;
+            background: url('./img/hot-dog.png') no-repeat;
+            
+        }
+        .first{
+            -webkit-animation: move 1.5s infinite linear;
+            animation: move 1.5s infinite linear;
+        }
+        .second{
+            -webkit-animation: move 1.5s 0.3s infinite linear;
+            animation: move 1.5s infinite 0.3s linear;
+        }
+        .three{
+            -webkit-animation: move 1.5s 0.6s infinite linear;
+            animation: move 1.5s infinite 0.6s linear;
+        }
+        .four{
+            -webkit-animation: move 1.5s 0.9s infinite linear;
+            animation: move 1.5s infinite 0.9s linear;
+        }
+        .five{
+            -webkit-animation: move 1.5s 1.2s infinite linear;
+            animation: move 1.5s infinite 1.2s linear;
+        }
+        @-webkit-keyframes move {
+            0%{
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                -webkit-transform: translate3d(-720px, 0, 0);
+            transform: translate3d(-720px, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="wsc"></div>
+        <div class="hot-dog first"></div>
+        <div class="hot-dog second"></div>
+        <div class="hot-dog three"></div>
+        <div class="hot-dog four"></div>
+        <div class="hot-dog five"></div>
+    </div>
+</body>
+</html>
