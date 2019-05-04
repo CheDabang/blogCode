@@ -5,3 +5,10 @@
 ## Object的联动更新
 
 这是一个老生常谈、也是一个面试基本都面烂的题目。ES5的`Object.defineProperty`和ES6的`Proxy`,由于兼容性问题，目前主流都是利用`Object.defineProperty`原理去实现。vue2目前也是采用兼容主流方案为主，据说后面vue3可能采用`Proxy`去做。
+
+当然并不是说有了`Object.defineProperty`就可以完成一个`Object`的联动更新, 只能结合这个属性再配合类似设计模式当中的`观察者模式`，就能实现Object的联动更新.
+
+### 定义一个简单函数
+```
+
+```

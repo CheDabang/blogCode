@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function defineReactive(data , key, val) {
+        Object.defineProperty(data,key, {
+            enumerable: true,
+            configurable: true,
+            get: function () {
+                console.log('触发get方法')
+                return val
+            },
+            set: function (newVal) {
+                console.log('触发set方法')
+                if(val === newVal) {
+                    return
+                }
+                val = newVal
+            }
+        })
+    }
+    var test = {
+        name: '张三',
+        age: 18
+    }
+    defineReactive(test, 'name')
+    // test.name  // 触发get方法
+    test.name = '李四' // 触发set方法
+    // 猜想2 如果变成数组呢，会触发几次
+    test.name = ['张三','李四','王五','赵六','孙七'];  // 只会触发一次，set方法
+    test.name // 触发get方法
+</script>
