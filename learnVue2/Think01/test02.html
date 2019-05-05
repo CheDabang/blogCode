@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">{{test.name}}</div>
+</body>
+
+</html>
+<script>
+    /**
+     * 练习一简单预热了Object.defineProperty, 那么接下来就实现练习一里面的两个需求点
+     * 1、当目标的调用的时候，收集记录在册。
+     * 2、修改新数据的时候通知
+    */
+function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            return val;
+        },
+        set: function(newVal) {
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+        }
+    });
+}
+ 
+function observe(data) {
+    console.log(data)
+    if (!data || typeof data !== 'object') {
+            return;
+    }
+    Object.keys(data).forEach(function(key) {
+            defineReactive(data, key, data[key]);
+    });
+};
+ 
+var library = {
+    book1: {
+        name: '空书名01'
+    },
+    book2: '空书名02'
+};
+observe(library);
+library.book1.name = 'vue权威指南'; // 属性name已经被监听了，现在值为：“vue权威指南”
+library.book2 = '没有此书籍';  // 属性book2已经被监听了，现在值为：“没有此书籍”
+
+</script>
