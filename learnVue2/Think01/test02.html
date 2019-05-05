@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <div id="app">{{test.name}}</div>
+    <h1 id="name">{{name}}</h1>
+    <div onclick="change()">change</div>
 </body>
 
 </html>
@@ -19,45 +20,7 @@
      * 1、当目标的调用的时候，收集记录在册。
      * 2、修改新数据的时候通知
     */
-function defineReactive(data, key, val) {
-    observe(val); // 递归遍历所有子属性
-    Object.defineProperty(data, key, {
-        enumerable: true,
-        configurable: true,
-        get: function() {
-            return val;
-        },
-        set: function(newVal) {
-            val = newVal;
-            console.log('属性' + key + '已经被监听了，现在食物为：“' + newVal.toString() + '”');
-        }
-    });
-}
- 
-function observe(data) {
-    console.log(data)
-    if (!data || typeof data !== 'object') {
-            return;
-    }
-    Object.keys(data).forEach(function(key) {
-            defineReactive(data, key, data[key]);
-    });
-};
- 
-var foodList = {
-    food1: {
-        name: '暂时没有名字'
-    },
-    food2: '煎饼果子'
-};
-observe(library);
-foodList.book1.name = '鸡腿'; // 属性name已经被监听了，现在值为：“鸡腿”
-foodList.book2 = '煎饼果子加鸡蛋';  // 属性book2已经被监听了，现在值为：“煎饼果子加鸡蛋”
-
-// observe就相当于一个监听器了, 对于每个对象的属性进行相应的监听。那么问题来了，我特么有好几个呢？
-// 如果我有很多监听器，这时候就需要一个容器Dep来存储记录
-
-/*  ES5版本容器Dep
+   /*  ES5版本容器Dep
 function Dep () {
     this.subs = [];
 }
@@ -79,15 +42,133 @@ class Dep {
         this.subs = []
     }
     // 收集依赖
-    addSub (sub) {
+    addSub(sub) {
         this.subs.push(sub)
     }
-    // 通知给观察者
-    notify () {
+    // 通知给观察者, 告诉观察者下雨了，该收衣服了.
+    notify() {
+        console.log("通知下雨收衣服！")
         this.subs.forEach(function(sub){
             sub.update()
         })
     }
 }
+function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    let dep = new Dep();  
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (Dep.target) {  // 判断是否需要添加订阅者
+                dep.addSub(Dep.target); // 在这里添加一个订阅者
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在食物为：“' + newVal.toString() + '”');
+            // 数据更新要通知人
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+ 
+function observe(data) {
+    console.log(data)
+    if (!data || typeof data !== 'object') {
+        return;
+    }
+    Object.keys(data).forEach(function(key) {
+            defineReactive(data, key, data[key]);
+    });
+};
+ 
+// var foodList = {
+//     food1: {
+//         name: '暂时没有名字'
+//     },
+//     food2: '煎饼果子'
+// };
+// observe(foodList);
+// foodList.food1.name = '鸡腿'; // 属性name已经被监听了，现在值为：“鸡腿”
+// foodList.food2 = '煎饼果子加鸡蛋';  // 属性book2已经被监听了，现在值为：“煎饼果子加鸡蛋”
 
+// observe就相当于一个监听器了, 对于每个对象的属性进行相应的监听。那么问题来了，我特么有好几个呢？
+// 如果我有很多监听器，这时候就需要一个容器Dep来存储记录
+
+
+
+//  ES5版本
+// function Watcher(vm, exp, cb) {
+//     this.cb = cb;
+//     this.vm = vm;
+//     this.exp = exp;
+//     this.value = this.get();  // 将自己添加到订阅器的操作
+// }
+ 
+// Watcher.prototype = {
+//     update: function() {
+//         this.run();
+//     },
+//     run: function() {
+//         var value = this.vm.data[this.exp];
+//         var oldVal = this.value;
+//         if (value !== oldVal) {
+//             this.value = value;
+//             this.cb.call(this.vm, value, oldVal);
+//         }
+//     },
+//     get: function() {
+//         Dep.target = this;  // 缓存自己
+//         var value = this.vm.data[this.exp]  // 强制执行监听器里的get函数
+//         Dep.target = null;  // 释放自己
+//         return value;
+//     }
+// };
+// ES6版本的Watcher
+class Watcher {
+    constructor (vm, exp, cb) {
+        this.cb = cb;
+        this.vm = vm;
+        this.exp = exp;
+        this.value = this.get();
+    }
+    update() {
+        console.log("数据更新!")
+        let value = this.vm.data[this.exp];
+        let oldValue = this.value;
+        this.value = value;
+        this.cb.call(this.vm, value, oldValue);
+    }
+
+    get() {
+        Dep.target = this;
+        let value = this.vm.data[this.exp]
+        Dep.target = null;
+        return value;
+    }
+}
+
+function Vue (data, el, exp) {
+    this.data = data;
+    observe(data);
+    el.innerHTML = this.data[exp];  // 初始化模板数据的值
+    new Watcher(this, exp, function (value) {
+        el.innerHTML = value;
+    });
+    return this;
+}
+
+var el = document.querySelector('#name');
+var vue = new Vue({
+    name: 'hello world'
+}, el, 'name');
+ 
+let change = function () {
+    vue.data.name = '修改data对象的name属性';
+}
 </script>
