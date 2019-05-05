@@ -29,7 +29,7 @@ function defineReactive(data, key, val) {
         },
         set: function(newVal) {
             val = newVal;
-            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+            console.log('属性' + key + '已经被监听了，现在食物为：“' + newVal.toString() + '”');
         }
     });
 }
@@ -44,14 +44,50 @@ function observe(data) {
     });
 };
  
-var library = {
-    book1: {
-        name: '空书名01'
+var foodList = {
+    food1: {
+        name: '暂时没有名字'
     },
-    book2: '空书名02'
+    food2: '煎饼果子'
 };
 observe(library);
-library.book1.name = 'vue权威指南'; // 属性name已经被监听了，现在值为：“vue权威指南”
-library.book2 = '没有此书籍';  // 属性book2已经被监听了，现在值为：“没有此书籍”
+foodList.book1.name = '鸡腿'; // 属性name已经被监听了，现在值为：“鸡腿”
+foodList.book2 = '煎饼果子加鸡蛋';  // 属性book2已经被监听了，现在值为：“煎饼果子加鸡蛋”
+
+// observe就相当于一个监听器了, 对于每个对象的属性进行相应的监听。那么问题来了，我特么有好几个呢？
+// 如果我有很多监听器，这时候就需要一个容器Dep来存储记录
+
+/*  ES5版本容器Dep
+function Dep () {
+    this.subs = [];
+}
+Dep.prototype = {
+    addSub: function(sub) {
+        this.subs.push(sub);
+    },
+    notify: function() {
+        this.subs.forEach(function(sub) {
+            sub.update();
+        });
+    }
+};
+*/
+
+// ES6版本容器Dep
+class Dep {
+    constructor () {
+        this.subs = []
+    }
+    // 收集依赖
+    addSub (sub) {
+        this.subs.push(sub)
+    }
+    // 通知给观察者
+    notify () {
+        this.subs.forEach(function(sub){
+            sub.update()
+        })
+    }
+}
 
 </script>
