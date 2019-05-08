@@ -153,22 +153,57 @@ class Watcher {
     }
 }
 
-function Vue (data, el, exp) {
-    this.data = data;
-    observe(data);
-    el.innerHTML = this.data[exp];  // 初始化模板数据的值
-    new Watcher(this, exp, function (value) {
-        el.innerHTML = value;
-    });
-    return this;
-}
 
+// 定义构造函数Vue第一版
+// function Vue (data, el, exp) {
+//     this.data = data;
+//     observe(data);
+//     el.innerHTML = this.data[exp];  // 初始化模板数据的值
+//     new Watcher(this, exp, function (value) {
+//         el.innerHTML = value;
+//     });
+//     return this;
+// }
+
+// 第一版里面修改必须得用指定data属性下面的key值进行修改，做一个代理，直接修改vue.data就ojbk
+class Vue {
+    constructor(data, el, exp) {
+        this.data = data;
+        Object.keys(data).forEach((key)=>{
+            this.proxyKeys(key);
+        })
+        observe(data);
+        el.innerHTML = this.data[exp];
+        new Watcher(this, exp, (value) => {
+            el.innerHTML = value;
+        })
+        return this;
+    }
+
+    proxyKeys(key) {
+       Object.defineProperty(this, key, {
+           enumerable: false,
+           configurable: true,
+           get: function proxyGetter() {
+               return this.data[key];
+           },
+           set: function proxySetter(newVal) {
+               this.data[key] = newVal
+           }
+       })
+    }
+}
 var el = document.querySelector('#name');
 var vue = new Vue({
     name: 'hello world'
 }, el, 'name');
  
+// 点击change，修改data.name的值，触发DOM变更
 let change = function () {
-    vue.data.name = '修改data对象的name属性';
-}
+    // vue.data.name = '修改data对象的name属性';
+    vue.name = "我直接改name就ojbk"
+} 
+
+
+
 </script>

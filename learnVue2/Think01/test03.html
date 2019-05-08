@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{name}}</h1>
+    </div>
+    <div onclick="change()">change</div>
+</body>
+
+</html>
+<script>
+    // 创建新的文档
+//     function nodeToFragment(el) {
+//         var fragment = document.createDocumentFragment();
+//         var child = el.firstChild;
+//         while (child) {
+//             // 将Dom元素移入fragment中
+//             fragment.appendChild(child);
+//             child = el.firstChild
+//         }
+//         return fragment;
+//     }
+
+//     function Compile(el, vm) {
+//     this.vm = vm;
+//     this.el = document.querySelector(el);
+//     this.fragment = null;
+//     this.init();
+// }
+// ES5版本：
+// function Compile(el, vm) {
+//     this.vm = vm;
+//     this.el = document.querySelector(el);
+//     this.fragment = null;
+//     this.init();
+// }
+
+// Compile.prototype = {
+//     init: function () {
+//         if (this.el) {
+//             this.fragment = this.nodeToFragment(this.el);
+//             this.compileElement(this.fragment);
+//             this.el.appendChild(this.fragment);
+//         } else {
+//             console.log('Dom元素不存在');
+//         }
+//     },
+//     nodeToFragment: function (el) {
+//         var fragment = document.createDocumentFragment();
+//         var child = el.firstChild;
+//         while (child) {
+//             // 将Dom元素移入fragment中
+//             fragment.appendChild(child);
+//             child = el.firstChild
+//         }
+//         return fragment;
+//     },
+//     compileElement: function (el) {
+//         var childNodes = el.childNodes;
+//         var self = this;
+//         [].slice.call(childNodes).forEach(function(node) {
+//             var reg = /\{\{(.*)\}\}/;
+//             var text = node.textContent;
+
+//             if (self.isTextNode(node) && reg.test(text)) {  // 判断是否是符合这种形式{{}}的指令
+//                 self.compileText(node, reg.exec(text)[1]);
+//             }
+
+//             if (node.childNodes && node.childNodes.length) {
+//                 self.compileElement(node);  // 继续递归遍历子节点
+//             }
+//         });
+//     },
+//     compileText: function(node, exp) {
+//         var self = this;
+//         var initText = this.vm[exp];
+//         this.updateText(node, initText);  // 将初始化的数据初始化到视图中
+//         new Watcher(this.vm, exp, function (value) { // 生成订阅器并绑定更新函数
+//             self.updateText(node, value);
+//         });
+//     },
+//     updateText: function (node, value) {
+//         node.textContent = typeof value == 'undefined' ? '' : value;
+//     },
+//     isTextNode: function(node) {
+//         return node.nodeType == 3;
+//     }
+// }
+
+class Compile {
+    constructor (el, vm) {
+        this.vm = vm;
+        this.el = document.querySelector(el);
+        this.fragment = null;
+        this.init();  
+    }
+
+    init() {
+        if(this.el){
+            this.fragment = this.nodeToFragment(this.el);
+            this.compileElement(this.fragment);
+            this.el.appendChild(this.fragment);
+        } else {
+            console.log('Dom元素不存在！')
+        }
+    }
+
+    nodeToFragment(el) {
+        let fragment = document.createDocumentFragment();
+        let child = el.firstChild;
+        while(child) {
+            fragment.appendChild(child);
+            child = el.firstChild;
+        }
+        return fragment;
+    }
+
+    compileElement(el) {
+        let childNodes = el.childNodes;
+        let self = this;
+        [].slice.call(childNodes).forEach(function(node) {
+            let reg = /\{\{(.*)\}\}/;
+            let text = node.textContent;
+            if (self.isTextNode(node) && reg.test(text)) {
+                self.compileText(node, reg.exec(text)[1]);
+            }
+
+            if(node.childNodes && node.childNodes.length) {
+                self.compileElement(node)
+            }
+        })
+    }
+
+    compileText(node, exp) {
+        let initText = this.vm[exp];
+        this.updateText(node, initText); // 将初始化的数据初始化到视图中
+        // new Watcher(this.vm, exp, function(value) {
+        //     slef.updateText(node, value);
+        // })
+        console.log('compileText')
+        new Watcher(this.vm, exp, (value) => {
+            this.updateText(node, value);
+        });
+    }
+    updateText(node, value) {
+        node.textContent = typeof value == 'undefined' ? '' : value;
+    }
+    isTextNode(node) {
+        return node.nodeType == 3;
+    }
+}
+class Dep {
+    constructor () {
+        this.subs = []
+    }
+    // 收集依赖
+    addSub(sub) {
+        this.subs.push(sub)
+    }
+    // 通知给观察者, 告诉观察者下雨了，该收衣服了.
+    notify() {
+        console.log("通知下雨收衣服！")
+        this.subs.forEach(function(sub){
+            sub.update()
+        })
+    }
+}
+function defineReactive(data, key, val) {
+    observe(val); // 递归遍历所有子属性
+    let dep = new Dep();  
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (Dep.target) {  // 判断是否需要添加订阅者
+                dep.addSub(Dep.target); // 在这里添加一个订阅者
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在text为：“' + newVal.toString() + '”');
+            // 数据更新要通知人
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+ 
+function observe(data) {
+    console.log(data)
+    if (!data || typeof data !== 'object') {
+        return;
+    }
+    Object.keys(data).forEach(function(key) {
+            defineReactive(data, key, data[key]);
+    });
+};
+ 
+// ES6版本的Watcher
+class Watcher {
+    constructor (vm, exp, cb) {
+        this.cb = cb;
+        this.vm = vm;
+        this.exp = exp;
+        this.value = this.get();
+    }
+    update() {
+        console.log("watch开始数据更新!")
+        let value = this.vm.data[this.exp];
+        let oldValue = this.value;
+        this.value = value;
+        this.cb.call(this.vm, value, oldValue);
+    }
+
+    get() {
+        Dep.target = this;
+        let value = this.vm.data[this.exp]
+        Dep.target = null;
+        return value;
+    }
+}
+
+// 既然加了新的解析器，那么类Vue也得搞一下
+
+class Vue {
+    constructor(options) {
+        this.vm = this;
+        this.data = options.data
+
+        Object.keys(this.data).forEach((key)=>{
+            this.proxyKeys(key);
+        })
+
+        observe(this.data);
+        new Compile(options.el, this.vm);
+        return this;
+    }
+
+    proxyKeys(key) {
+       Object.defineProperty(this, key, {
+           enumerable: false,
+           configurable: true,
+           get: function proxyGetter() {
+               return this.data[key];
+           },
+           set: function proxySetter(newVal) {
+               this.data[key] = newVal
+           }
+       })
+    }
+}
+var vue = new Vue({
+    el: '#app',
+    data: {
+        name: 'hello world'
+    }
+});
+
+// 点击change，修改data.name的值，触发DOM变更
+let change = function () {
+    // vue.data.name = '修改data对象的name属性';
+    vue.name = "我直接改name就ojbk"
+} 
+// 这个基础版完成了，不过貌似有问题。{{}}这个符号完全没有啥子卵用，所以还得再弄一个解析器，专门解析这个{{}}
+</script>
