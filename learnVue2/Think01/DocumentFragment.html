@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="ul">
+    </ul>
+</body>
+
+</html>
+<script>
+    setTimeout(() => {
+        var element = document.getElementById('ul'); // assuming ul exists
+        var fragment = document.createDocumentFragment();
+        var browsers = ['Firefox', 'Chrome', 'Opera',
+            'Safari', 'Internet Explorer'
+        ];
+
+        browsers.forEach(function (browser) {
+            var li = document.createElement('li');
+            li.textContent = browser;
+            fragment.appendChild(li);
+            // element.appendChild(li)
+        });
+
+        element.appendChild(fragment);
+    }, 10000);
+</script>

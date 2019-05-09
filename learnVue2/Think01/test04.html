@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <div id="app">
         <h2>{{title}}</h2>
@@ -14,6 +16,7 @@
         <button v-on:click="clickChange">click me!</button>
     </div>
 </body>
+
 </html>
 <script>
     class Compile {
@@ -45,21 +48,21 @@
         }
 
         compileElement(el) {
-        let childNodes = el.childNodes;
-        [].slice.call(childNodes).forEach( (node) => {
-            let reg = /\{\{(.*)\}\}/;
-            let text = node.textContent;
-            if (this.isElementNode(node)) {  
-                this.compile(node);
-            } else if (this.isTextNode(node) && reg.test(text)) {
-                this.compileText(node, reg.exec(text)[1]);
-            }
+            let childNodes = el.childNodes;
+            [].slice.call(childNodes).forEach((node) => {
+                let reg = /\{\{(.*)\}\}/;
+                let text = node.textContent;
+                if (this.isElementNode(node)) {
+                    this.compile(node);
+                } else if (this.isTextNode(node) && reg.test(text)) {
+                    this.compileText(node, reg.exec(text)[1]);
+                }
 
-            if (node.childNodes && node.childNodes.length) {
-                this.compileElement(node);
-            }
-        });
-    }
+                if (node.childNodes && node.childNodes.length) {
+                    this.compileElement(node);
+                }
+            });
+        }
         compile(node) {
             // var self = this;
             let nodeAttrs = node.attributes;
