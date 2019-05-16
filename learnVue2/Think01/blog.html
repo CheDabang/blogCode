@@ -15,11 +15,12 @@
     var food = "煎饼果子"
     var drink = "热豆浆"
     var list = food + drink
-    console.log(list)
+    console.log(list) // 煎饼果子热豆浆
     food = '炸鸡汉堡'
     drink = '快乐水'
-    console.log(list)
+    console.log(list) // 煎饼果子热豆浆
     // 很明显控制台输出两端重复文字，煎饼果子热豆浆
-
-    
+    // 想要变化，那么就得重新赋值。
+    var list = food + drink
+    console.log(list) // 炸鸡汉堡快乐水
 </script>
