@@ -13,6 +13,7 @@
 ```
 <div id="app">
   主食：{{ eat }} 饮料：{{drink}}
+  
 </div>
 <sript>
     var app = new Vue({
