@@ -14,6 +14,10 @@
     let data = {
         food: '煎饼果子',
         drink: '热豆浆',
+        meal: {
+            '鸡不可失': '麦辣鸡翅2块 + 麦乐鸡5块 + 中杯可乐',
+            '鸡同鸭讲': '老北京鸡肉卷 + 老北京香辣鸭肉卷 + 九珍果汁2杯'
+        },
         fruit: ['苹果', '香蕉', '西瓜']
     }
     class Dep {
@@ -26,7 +30,6 @@
                 this.subs.push(sub)
             }
         }
-
         notify() {
             console.log("暗号：下雨啦，收衣服啦！")
             this.subs.forEach(sub => sub()) // 运行我们的target
@@ -35,7 +38,6 @@
     Object.keys(data).forEach(key => {
         let value = data[key]
         let dep = new Dep()
-
         Object.defineProperty(data, key, {
             get() {
                 dep.depend(target)
@@ -47,7 +49,6 @@
             }
         })
     })
-
     function watcher(myFun) {
         target = myFun
         // dep.depend(target)
