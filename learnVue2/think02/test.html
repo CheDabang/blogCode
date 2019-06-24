@@ -51,17 +51,20 @@
     })
     function watcher(myFun) {
         target = myFun
-        // dep.depend(target)
+        // dep.depend(target) 这里修改，移动到Object.defineProperty当中去
         target()
         target = null
     }
     watcher(() => {
-        data.menu = data.food + data.drink + data.fruit
+        data.menu = data.food + data.drink + data.meal['鸡不可失'] + data.fruit[2]
     })
     console.log(data.menu)
-    data.food = "炸鸡汉堡"
-    data.drink = "快乐水"
-    data.fruit.push('柠檬')
-    console.log(data.fruit)
-    console.log(data.menu)
+    // data.food = "炸鸡汉堡"
+    // data.drink = "快乐水"
+    data.meal['鸡不可失'] = "老北京鸡肉卷"
+    data.fruit.push('柠檬')  // 暗号没有启动  
+    data.fruit.pop()
+    data.fruit.length = 0  // 暗号没有启动
+
+    // 说明arr并不能触发相应的set、get变化
 </script>
