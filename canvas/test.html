@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #top{
+            border: 10px solid #e91e63;
+        }
+        #bottom{
+            border: 10px solid #03a9f4;
+        }
+    </style>
+</head>
+
+<body>
+    圆形：
+    <canvas id="top" width="220" height="220"></canvas>
+    圆形面积分解：
+    <canvas id="bottom" width="700" height="700"></canvas>
+</body>
+
+</html>
+<script>
+    let canvasT = document.getElementById('top');
+    let canvasB = document.getElementById('bottom');
+    let ctxT = canvasT.getContext('2d');
+    let ctxB = canvasB.getContext('2d');
+    const drawArc = (r) => {
+        // ctxT.lineWidth = 10;
+        ctxT.lineWidth = 5
+        ctxT.beginPath();
+        ctxT.arc(110, 110, r, 0, Math.PI * 2, true); // 绘制
+        ctxT.stroke();
+        console.log('end');
+    }
+    // for(let i = 1; i < 11; i++) {
+    //     let r = i * 10
+    //     drawArc(r)
+    // }
+        for(let i = 1; i <= 20; i++) {
+        let r = i * 5
+        drawArc(r)
+    }
+    const drawLine = (x, y) =>  {
+        // ctxB.lineWidth = 10;
+        ctxB.lineWidth = 5
+        // ctxB.lineWidth = 1
+        ctxB.beginPath();
+        ctxB.moveTo(x, 690);
+        ctxB.lineTo(x, y);
+        ctxB.stroke();
+    }
+    
+    // for(let i = 1; i < 11; i++) {
+    //     let x = i * 10;
+    //     y = 690 - 2*x*3.14;
+    //     drawLine(x,y)
+    // }
+    for(let i = 1; i <= 20; i++) {
+        // let x = i * 1;
+        let x = i * 5;
+        y = 690 - 2*x*3.14;
+        drawLine(x,y)
+    }
+
+</script>
