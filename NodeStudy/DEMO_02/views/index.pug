@@ -8,10 +8,29 @@ html(lang="en")
     link(href='/public/style/reset.css' type='text/css' rel='stylesheet')
     link(href='/public/style/style.css' type='text/css' rel='stylesheet')
   body
-    h1= message
-    ul
-      li= '本地列表'
-      li
-      li
-      li
-      li
+    Header
+      div.title CURD
+    div.main
+      nav.sidebar
+        div.user
+          div.avatar
+            img(src="/public/img/avatar.jpg", alt="头像")
+          div.title
+            h1 Che Dabang
+            p 前端搬砖仔
+        ul
+          li.active 本地Json版本
+      div.content
+        div.head
+          div.btn.add 添加
+        div.page
+          ul
+            each item in foods            
+              li
+                div.option= item.name
+                div.option= item.type
+                div.option.price= item.price
+                div.option.btn-list
+                  div.btn.edit 编辑
+                  div.btn.del 删除
+

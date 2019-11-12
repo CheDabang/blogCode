@@ -73,18 +73,6 @@
     // 单纯这么搞，貌似有点麻烦
     // 再来加强版,把这个整合一下
 
-<<<<<<< HEAD
-    class Dep {
-        constructor() {
-            this.subs = []
-        }
-        // 收集依赖
-        depend(sub) {
-            if (sub && !this.subs.includes(sub)) {  // 做一个判断
-                this.subs.push(sub)
-            }
-        }
-=======
     // ---------------------code-----------------------
     // class Dep {
     //     constructor() {
@@ -96,7 +84,6 @@
     //             this.subs.push(sub)
     //         }
     //     }
->>>>>>> e84f2b2c9b3cfc9d637b36b2562f936eac3ac647
 
     //     notify() {
     //         console.log("暗号：下雨啦，收衣服啦！")
@@ -149,54 +136,11 @@
     // watcher(target = () => {
     //     menu = food + drink
     // })
-<<<<<<< HEAD
-    // console.log(list)
-    // food = '炸鸡汉堡'
-    // drink = '快乐水'
-    // dep.notify()
-    console.log(list)
-=======
->>>>>>> e84f2b2c9b3cfc9d637b36b2562f936eac3ac647
     // 但是每次都需要更新数据，还需要我这边手工消息通知太麻烦，那么就得思考对象有什么属性
     // 能够直接更新
     // 这个时候需要用到属性Object.defindProperty
 
     // 之后就是通过一个for循环，依次为每个属性添加Objec.defindProperty
-<<<<<<< HEAD
-    // let data = {
-    //     food: '煎饼果子',
-    //     drink: '热豆浆'
-    // }
-    // Object.keys(data).forEach(key => {
-    //     let value = data[key]
-    //     let dep = new Dep()
-
-    //     Object.defineProperty(data, key, {
-    //         get() {
-    //             dep.depend(target)
-    //             return value
-    //         },
-    //         set(newVal) {
-    //             console.log(newVal)
-    //             value = newVal
-    //             dep.notify()
-    //         }
-    //     })
-    // })
-    // function watcher(myFun) {
-    //     target = myFun
-    //     dep.depend(target)
-    //     target()
-    //     target = null
-    // }
-    // watcher(() => {
-    //     data.list = data.food + data.drink
-    // })
-    // console.log(data.list)
-    // data.food = "炸鸡汉堡"
-    // console.log(data.list)
-    // 昨天的忘记同步的脑壳疼
-=======
     // ----------------code---------------------
     let data = {
         food: '煎饼果子',
@@ -247,5 +191,4 @@
     data.food = "炸鸡汉堡"
     data.drink = "快乐水"
     console.log(data.menu)
->>>>>>> e84f2b2c9b3cfc9d637b36b2562f936eac3ac647
 </script>
