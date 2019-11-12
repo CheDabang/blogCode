@@ -45,4 +45,19 @@
      * 2、当这个对象属性发生改变时，比如一把武器的属性攻击力降低了、然后就服务器就对使用该武器的玩家，发送通知。你的武器被削弱了
      * 
     */
+
+    let data = {
+         food: '煎饼果子',
+         drink: '热豆浆'
+    }
+    Object.defineProperty(data, 'food', {
+        get() {
+            console.log(`触发get方法`)
+    },
+        set(newVal) {
+            console.log(`设置food为${newVal}`)
+        }
+    })
+data.food
+data.food = '炸鸡汉堡'
 </script>

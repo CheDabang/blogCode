@@ -74,7 +74,6 @@
         }
         // 收集依赖
         depend(sub) {
-            console.log(1111111111)
             if (sub && !this.subs.includes(sub)) {  // 做一个判断
                 this.subs.push(sub)
             }
@@ -94,6 +93,9 @@
     // dep.notify()
     // console.log(list)
     // 后面如果有新的依赖，所以还是新命名targetMax，然后dep添加，更新数据数据数据的，再通知变化。
+
+    // let food = "煎饼果子"
+    // let drink = "热豆浆"
     // let dep = new Dep()
     // function watcher(myFun) {
     //     target = myFun
@@ -108,44 +110,43 @@
     // food = '炸鸡汉堡'
     // drink = '快乐水'
     // dep.notify()
-    // console.log(list)
+    console.log(list)
     // 但是每次都需要更新数据，还需要我这边手工消息通知太麻烦，那么就得思考对象有什么属性
     // 能够直接更新
     // 这个时候需要用到属性Object.defindProperty
 
     // 之后就是通过一个for循环，依次为每个属性添加Objec.defindProperty
-    let data = {
-        food: '煎饼果子',
-        drink: '热豆浆'
-    }
-    Object.keys(data).forEach(key => {
-        let value = data[key]
-        let dep = new Dep()
+    // let data = {
+    //     food: '煎饼果子',
+    //     drink: '热豆浆'
+    // }
+    // Object.keys(data).forEach(key => {
+    //     let value = data[key]
+    //     let dep = new Dep()
 
-        Object.defineProperty(data, key, {
-            get() {
-                dep.depend(target)
-                return value
-            },
-            set(newVal) {
-                console.log(newVal)
-                value = newVal
-                dep.notify()
-            }
-        })
-    })
-    function watcher(myFun) {
-        target = myFun
-        // dep.depend(target)
-        target()
-        target = null
-    }
-    watcher(() => {
-        console.log('watcher')
-        data.list = data.food + data.drink
-    })
-    console.log(data.list)
-    data.food = "炸鸡汉堡"
-    console.log(data.list)
+    //     Object.defineProperty(data, key, {
+    //         get() {
+    //             dep.depend(target)
+    //             return value
+    //         },
+    //         set(newVal) {
+    //             console.log(newVal)
+    //             value = newVal
+    //             dep.notify()
+    //         }
+    //     })
+    // })
+    // function watcher(myFun) {
+    //     target = myFun
+    //     dep.depend(target)
+    //     target()
+    //     target = null
+    // }
+    // watcher(() => {
+    //     data.list = data.food + data.drink
+    // })
+    // console.log(data.list)
+    // data.food = "炸鸡汉堡"
+    // console.log(data.list)
     // 昨天的忘记同步的脑壳疼
 </script>
