@@ -1,7 +1,6 @@
-
-
 const fs = require('fs')
 const local = require('./local.json')
+const foods = require('./foods')
 // Express 提供了一种更好的方式
 // 专门用来包装路由的
 const express = require('express')
@@ -10,9 +9,30 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', function (req, res) {
-    res.render('index', {
-        title: '切图仔救赎-Node学习之express做一个本地CURD',
-        foods: local.foods
-      })
+  res.render('index', {
+    title: '本地CURD页面Index',
+    foods: local.foods
   })
+})
+
+router.get('/new/', function (req, res) {
+  res.render('new', {
+    title: '本地CURD页面new',
+    foods: local.foods
+  })
+})
+
+router.post('/new/', function (req, res) {
+  console.log(req.body)
+  // res.render('new', {
+  //   title: '本地CURD页面new',
+  //   foods: local.foods
+  // })
+  foods.save(req.body, function (err) {
+    if (err) {
+      return res.status(500).send('Server error.')
+    }
+    res.redirect('/')
+  })
+})
 module.exports = router
