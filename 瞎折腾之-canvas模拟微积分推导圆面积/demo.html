@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #top {
+            border: 10px solid #e91e63;
+        }
+
+        #bottom {
+            border: 10px solid #03a9f4;
+        }
+    </style>
+</head>
+
+<body>
+    圆形：
+    <canvas id="top" width="220" height="220"></canvas>
+    圆形面积分解：
+    <canvas id="bottom" width="700" height="700"></canvas>
+    <br />
+    控制器: <input type="range" min="10" max="100" step="10" value="10" onchange="getVal()" id="model">
+    <p id="val">分割份数：10</p>
+</body>
+
+</html>
+<script>
+    let canvasT = document.getElementById('top');
+    let canvasB = document.getElementById('bottom');
+    let val = document.getElementById('val')
+    let ctxT = canvasT.getContext('2d');
+    let ctxB = canvasB.getContext('2d');
+    const drawArc = (r, width) => {
+        ctxT.lineWidth = width
+        ctxT.beginPath();
+        ctxT.arc(110, 110, r, 0, Math.PI * 2, true); // 绘制
+        ctxT.stroke();
+    }
+
+    const drawLine = (x, y, width) => {
+        ctxB.lineWidth = width 
+        ctxB.beginPath();
+        ctxB.moveTo(x, 690);
+        ctxB.lineTo(x, y);
+        ctxB.stroke();
+    }
+
+
+    const startDraw = (num) => {
+        let width = 100 / num
+        ctxT.clearRect(0, 0, canvasT.width, canvasT.height)
+        ctxB.clearRect(0, 0, canvasB.width, canvasB.height)
+        for (let i = 1; i <= num; i++) {
+            let r = i * width
+            let y = 690 - 2 * r * 3.14;
+            drawArc(r, width)
+            drawLine(r + 10, y, width)
+        }
+    }
+    let getVal = () => {
+        let model = document.getElementById('model')
+        let value = model.value
+        val.innerHTML = `分割份数：${value}`
+        startDraw(value)
+    }
+    getVal()
+</script>

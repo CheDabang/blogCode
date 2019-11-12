@@ -56,6 +56,7 @@ class Dep {
 function defineReactive(data, key, val) {
     observe(val); // 递归遍历所有子属性
     let dep = new Dep();  
+    console.log(1111)
     Object.defineProperty(data, key, {
         enumerable: true,
         configurable: true,
