@@ -137,7 +137,7 @@ exports.deleteById = function (id, callback) {
       return item.id === parseInt(id)
     })
 
-    // 根据下标从数组中删除对应的学生对象
+    // 根据下标从数组中删除对应的食物对象
     foods.splice(deleteId, 1)
 
     // 把对象数据转换为字符串

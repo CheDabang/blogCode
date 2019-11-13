@@ -12,3 +12,17 @@
 | /edit   | GET     | id                       | 渲染食物编辑页面  |
 | /edit   | POST    | id、name、type、price     | 处理编辑食物请求   |
 | /delete | POST    | id                       | 处理删除食物请求   |
+
+# 运行方法
+
+```
+npm i
+node index.js
+```
+
+如果可以建议安装nodemon，来运行调试index.js
+
+```
+npm install -g nodemon
+nodemon index.js
+```
