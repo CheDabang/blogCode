@@ -22,18 +22,18 @@ html(lang="en")
           li.active 本地Json版本
       div.content
         div.head
-          div.title 添加食物
+          h2.title 添加食物
         div.page
           form(action="/new" method="post")
-            div.from-grounp
+            div.form-grounp
               label 姓名：
               input(name='name')
-            div.from-grounp
+            div.form-grounp
               label 类型：
               input(name='type') 
-            div.from-grounp
+            div.form-grounp
               label 价格：
               input(name='price')
-            button(type="sbumit") sbumit
+            button(type="sbumit" class="sbumit") 提交
 
 

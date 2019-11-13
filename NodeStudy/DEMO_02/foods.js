@@ -10,6 +10,19 @@ const fs = require('fs')
 const dbPath = './local.json'
 
 /**
+ * 获取学生列表
+ * @param  {Function} callback 回调函数
+ */
+exports.find = function (callback) {
+  fs.readFile(dbPath, 'utf8', function (err, data) {
+    if (err) {
+      return callback(err)
+    }
+    callback(null, JSON.parse(data).foods)
+  })
+}
+
+/**
  * 添加保存学生
  * @param  {Object}   food  食物对象
  * @param  {Function} callback 回调函数
