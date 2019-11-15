@@ -170,7 +170,12 @@ header .title{
         background: rgba(255, 255, 255, 0.1);
     }
 }
-
+@keyframes autofill {
+    to {
+        color: #666;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
 input:-webkit-autofill {
     animation-name: autofill !important;
     animation-fill-mode: both !important;
