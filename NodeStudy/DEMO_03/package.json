@@ -1,0 +1,14 @@
+{
+  "name": "demo_03",
+  "version": "1.0.0",
+  "description": "CRUD_MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CheDabang",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.7.11"
+  }
+}
