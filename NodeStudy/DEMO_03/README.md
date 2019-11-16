@@ -22,3 +22,11 @@
 + `myFoods` 数据库名称
 + `foodList` 集合的名称
 一系列操作比较骚气
+
+#### mongoose基本指令
+
+ `connect`表示本地指定数据库
+ 
+> `mongoose.connect('mongodb://localhost/test')`
+
+`mongoose.Schema`
