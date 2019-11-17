@@ -1,8 +1,8 @@
 ### 关于MongoDB
 
 ### 启动方式
-> `npm i`
-> `nodemon index.js` or `node index.js`  
+> npm i
+nodemon index.js or node index.js
 
 #### 基本shell指令
 
