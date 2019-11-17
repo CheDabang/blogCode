@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title= title
+    link(href='/public/style/reset.css' type='text/css' rel='stylesheet')
+    link(href='/public/style/style.css' type='text/css' rel='stylesheet')
+  body
+    Header
+      div.title CURD
+    div.main
+      nav.sidebar
+        div.user
+          div.avatar
+            img(src="/public/img/avatar.jpg", alt="头像")
+          div.title
+            h1 Che Dabang
+            p 前端搬砖仔
+        ul
+          li.active MongoDB 版本
+      div.content
+        div.head
+          div.btn.add 
+            a(href="/new") 添加
+        div.page
+          ul
+            each item in foods            
+              li
+                div.option= item.name
+                div.option= item.type
+                div.option.price= item.currency + item.price
+                div.option.btn-list
+                  div.btn.edit 
+                    a(href=`/edit?id=${item.id}`) 编辑
+                  div.btn.del 
+                    a(href=`/delete?id=${item.id}`) 删除

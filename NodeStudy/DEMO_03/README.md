@@ -1,5 +1,9 @@
 ### 关于MongoDB
 
+### 启动方式
+> `npm i`
+> `nodemon index.js` or `node index.js`  
+
 #### 基本shell指令
 
 连接MongoDB 
@@ -27,6 +31,48 @@
 
  `connect`表示本地指定数据库
  
-> `mongoose.connect('mongodb://localhost/test')`
+> `mongoose.connect('mongodb://localhost/dabang')`
 
 `mongoose.Schema`
+Mongoose 的一切始于 Schema。每个 schema 都会映射到一个 MongoDB collection ，并定义这个collection里的文档的构成。
+
+```
+const Schema = mongoose.Schema
+
+let foodsSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  currency: {
+    type: String,
+    default: '￥'
+  }
+})
+```
+这里就意味我弄了一个食物列表`Schema`, 之后丢到一个`model`里面. 
+
+```
+const Foods = mongoose.model('Foods', foodsSchema)
+```
+之后我就可以通过Foods来进行操作这个foodsSchema
+
+##### 简单的操作
+
++ 增加食物数据 `Foods(food).save((err) => {..do something})`
+
++ 查询食物列表 `Schema` `Foods.find((err, foodsList) => {...do something})`
+
++ 根据ID查询指定食物 `Foods.findById(id, (err, food) => {...do something})`
+
++ 根据ID修改指定食物 `Foods.findByIdAndUpdate(id, food, (err) => {...do something})`
+
++ 根据ID删除指定食物 `Foods.findByIdAndRemove(id, (err) => {...do something}`
