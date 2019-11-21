@@ -9,11 +9,21 @@
 + 非关系型数据库：数据库之间的信息并不是相互关联的，只是简单存储。 例如：MogonDB
 
 
-### 基本指定
+### 检索数据
 
-+ select 查询
+# select查询语法
 
-+ from 
+**基本语法**
+```
+SELECT column_name(s) FROM table_name
+```
+代表返回表格中`table_name`中叫`column_name`的某一栏数据、 这里复数`（s）`表示可以添加多个`column_name`
+
++ `select * from table_name`
+代表返回所有的`table_name` 
+
+> PS: `table_name` 其实可以写成 `table name`但是，一般用引号包裹，才能添加空格， 所以为了避免麻烦， 大家一般习惯使用下划线的语法
+
 
 + where
 
