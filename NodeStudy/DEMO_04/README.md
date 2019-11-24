@@ -66,3 +66,5 @@ in版本`where state in (value1, value2, value3)`
 
 更多的建议学习正则，先了解基本用法
 
++ `null` 获取信息缺失相关信息
+例如： `where food null` 找到食物为空的记录
