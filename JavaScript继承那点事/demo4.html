@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 借用构造函数
+  function SuperMenu() {
+    this.foods = ["香辣鸡腿堡", "老北京鸡肉卷", "香辣鸡翅"];
+  }
+  function SubMenu() {
+    // 继承SuperMenu
+    SuperMenu.call(this);
+  }
+
+  // order1口渴需要添加一瓶快乐水
+  var order1 = new SubMenu();
+  order1.foods.push("快乐水");
+  console.log(order1.foods);
+  // 输出: 【"香辣鸡腿堡", "老北京鸡肉卷", "香辣鸡翅", "快乐水"】
+
+  //  order2正常套餐
+  var order2 = new SubMenu();
+  console.log(order2.foods);
+  // 输出: 【"香辣鸡腿堡", "老北京鸡肉卷", "香辣鸡翅"】
+</script>
