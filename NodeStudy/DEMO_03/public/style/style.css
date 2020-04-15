@@ -1,0 +1,201 @@
+header{
+    width: 100%;
+    height: 80px;
+    background: #2d3035;
+    border-bottom: 1px solid #34373d;
+}
+header .title{
+    width: 280px;
+    line-height: 80px;
+    font-size: 30px;
+    color: #DB6574;
+    font-weight: 700;
+    text-align: center;
+}
+.main{
+    display: flex;
+    width: 100%;
+    height: calc(100% - 81px);
+    background: #22252a;
+}
+/* 左侧导航 */
+.sidebar{
+    box-sizing: border-box;
+    width: 280px;
+    height: 100%;
+    background: #2d3035;
+    border-right: 1px solid #34373d;
+}
+.sidebar .user{
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+}
+.sidebar .user .avatar{
+    margin-right: 15px;
+    width: 46px;
+    height: 46px;
+}
+.sidebar .user img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.sidebar .user .title h1{
+    color:#8a8d93;
+    font-size: 18px;
+    line-height: 22px;
+}
+.sidebar .user .title p {
+    color: #6a6c70;
+    font-size: 14px;
+}
+.sidebar li{
+   text-align: center;
+   height: 60px;
+   line-height: 60px;
+   font-size: 16px;
+   color: rgb(106, 108, 112);
+}
+.sidebar li.active{
+    background: #34373d;
+    color: #bfc1c4;
+}
+/* 右侧内容 */
+.content {
+    width: calc(100% - 280px);
+    height: 100%;
+}
+.content .head{
+    box-sizing: border-box;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    width: 100%;
+    height: 60px;
+    background: #2d3035;
+}
+.content .page{
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(100% - 60px);
+    padding: 30px 30px 0 30px;
+}
+.content ul{
+    width: 100%;
+}
+.content li{
+    display: flex;
+    margin-bottom: 30px;
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 50px;
+    background: #2d3035;
+    color: #03A9F4;
+    
+}
+.content li .option{
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}
+.content li .btn-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content .btn{
+    margin: 0 10px;
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+}
+.content li .price{
+    color: #ee9614;
+    font-weight: 700;
+    font-size: 24px;
+}
+.content  .edit{
+    background: #337ab7;
+}
+.content .del{
+    background: #d9534f;
+}
+.content .add{
+    background: #5cb85c;
+}
+/* 右侧main板块-new */
+.content .title{
+    color: #a5a7ab;
+    line-height: 60px;
+    font-size: 20px;
+}
+.content .form-grounp{
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.content label{
+    margin-bottom: 30px;
+    display: block;
+    font-weight: 700;
+    color: #a5a7ab;
+}
+.content input{
+    box-sizing: border-box;
+    padding: 6px 12px;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+/* 解决input自动填充导致变色问题 */
+@-webkit-keyframes autofill {
+    to {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+@keyframes autofill {
+    to {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+input:-webkit-autofill {
+    animation-name: autofill !important;
+    animation-fill-mode: both !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    background-clip: content-box !important;
+} 
+.content button{
+    background: none;
+    border: none;
+    outline: none;
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    background: #5cb85c;
+}
+

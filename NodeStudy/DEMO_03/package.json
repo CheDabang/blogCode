@@ -1,0 +1,19 @@
+{
+  "name": "demo_03",
+  "version": "1.0.0",
+  "description": "CRUD_MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CheDabang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
+    "mongoose": "^4.13.19",
+    "pug": "^2.0.4",
+    "save": "^2.4.0",
+    "serve-favicon": "^2.5.0"
+  }
+}
