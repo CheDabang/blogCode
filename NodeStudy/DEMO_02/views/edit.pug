@@ -22,17 +22,20 @@ html(lang="en")
           li.active 本地Json版本
       div.content
         div.head
-          div.btn.add 
-            a(href="/new") 添加
+          h2.title 添加食物
         div.page
-          ul
-            each item in foods            
-              li
-                div.option= item.name
-                div.option= item.type
-                div.option.price= item.price
-                div.option.btn-list
-                  div.btn.edit 
-                    a(href=`/edit?id=${item.id}`) 编辑
-                  div.btn.del 
-                    a(href=`/delete?id=${item.id}`) 删除
+          form(action="/edit" method="post")
+            //- 用来放一些不希望被用户看见，但是需要被提交到服务端的数据
+            input(type="hidden" name="id" value=food.id)
+            div.form-grounp
+              label 姓名：
+              input(name='name' value=food.name)
+            div.form-grounp
+              label 类型：
+              input(name='type' value=food.type) 
+            div.form-grounp
+              label 价格：
+              input(name='price' value=food.price)
+            button(type="sbumit" class="sbumit") 提交
+
+

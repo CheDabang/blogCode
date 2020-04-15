@@ -166,13 +166,13 @@ header .title{
 /* 解决input自动填充导致变色问题 */
 @-webkit-keyframes autofill {
     to {
-        color: #666;
+        color: #fff;
         background: rgba(255, 255, 255, 0.1);
     }
 }
 @keyframes autofill {
     to {
-        color: #666;
+        color: #fff;
         background: rgba(255, 255, 255, 0.1);
     }
 }
