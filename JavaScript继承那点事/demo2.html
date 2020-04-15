@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function Kars() {
+        this.value = "头疼阳光"
+    }
+    Kars.prototype.getKarsValue = function () {
+        return this.value;
+    }
+    function Dio() {
+        this.subValue = '头疼JOJO'
+    }
+    Dio.prototype = new Kars();
+    Dio.prototype.getDioValue = function () {
+        return this.subValue;
+    }
+    var Ice = new Dio();
+    console.log(Ice.getKarsValue())  // 输出： 头疼阳光
+
+    // 验证Ice是否也继承了Object
+    Object.prototype.testName = function () {
+        return '我是万物起源!'
+    }
+    Ice.testName()
+    console.log(Ice.testName())
+</script>
+
+
+

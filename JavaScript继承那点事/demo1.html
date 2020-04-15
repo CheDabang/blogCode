@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 创建⼀个构造⽅法
+  function Dog() {
+    this.sayHello = function () {
+      console.log("炸鸡汉堡快乐水!");
+    };
+  }
+  // 创建两个对象
+  var dog1 = new Dog();
+  var dog2 = new Dog();
+  // 调⽤和⽐较
+  dog1.sayHello(); // 输出： 炸鸡汉堡快乐水！
+  dog2.sayHello(); // 输出:  炸鸡汉堡快乐水!
+  console.log(dog1.sayHello === dog2.sayHello); // 输出：false
+
+  console.log('----------快乐分割线-----------')
+  // 共用内存版本
+  function superDog() {}
+  superDog.prototype.sayHello = function () {
+    console.log("炸鸡汉堡快乐水!");
+  };
+  var subDog1 = new superDog(); 
+  var subDog2 = new superDog(); 
+  subDog1.sayHello(); // 输出： 炸鸡汉堡快乐水！
+  subDog2.sayHello(); // 输出:  炸鸡汉堡快乐水!
+  console.log(subDog1.sayHello === subDog2.sayHello); // 输出：true
+</script>
