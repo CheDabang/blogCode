@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  var Y = {};
+  /**
+   * @method extend
+   * @param {function} r the object to modify.
+   * @param {function} s the object to inherit.
+   */
+   function Extend (r, s) {
+    var sp = s.prototype;
+    var rp = Object.create(sp);
+    rp.constructor = r;
+    r.prototype = rp;
+    
+    // assign constructor property
+  };
+  function SuperMenu(name) {
+    this.name = name;
+    this.foods = ["老北京鸡肉卷", "香辣鸡腿堡", "香辣鸡翅"];
+  }
+  SuperMenu.prototype.sayName = function () {
+    console.log(this.name);
+  };
+  function SubMenu(name, age) {
+    SuperMenu.call(this, name);
+    this.age = age;
+  }
+  SubMenu.prototype.sayAge = function () {
+    console.log(this.age);
+  };
+  Extend(SubMenu, SuperMenu);
+  var order1 = new SubMenu("开封菜", 1952);
+  order1.foods.push('快乐水')
+  var order2 = new SubMenu('金拱门', 1955);
+  console.log(order1, order2);
+  function Bird(name) {
+    this.name = name;
+}
+
+Bird.prototype.flighted   = true;  // Default for all Birds
+Bird.prototype.isFlighted = function () { return this.flighted };
+Bird.prototype.getName    = function () { return this.name };
+
+function Chicken(name) {
+    // Chain the constructors
+    Chicken.superclass.constructor.call(this, name);
+}
+// Chickens are birds
+Extend(Chicken, Bird);
+
+// Define the Chicken prototype methods/members
+Chicken.prototype.flighted = false; // Override default for all Chickens
+console.log(Chicken.prototype,Bird.prototype)
+
+function Person () {}
+Person.prototype.test = function () {
+    console.log(11111111111)
+}
+Person.test()
+</script>
