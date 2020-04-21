@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ES6继承</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  class KFC {
+    constructor(food) {
+      this.food = food;
+    }
+    getFood() {
+      console.log(this.food);
+    }
+  }
+
+  class Mcdonalds extends KFC {
+    constructor(food, newFood) {
+      super(food);
+      this.newFood = newFood;
+    }
+    getNewFood() {
+      console.log(this.newFood);
+    }
+  }
+
+  const dog = new Mcdonalds("老北京鸡肉卷", "5G炸鸡");
+  dog.getFood(); // "老北京鸡肉卷"
+  dog.getNewFood(); // "5G炸鸡"
+</script>
