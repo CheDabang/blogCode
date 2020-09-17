@@ -30,4 +30,31 @@
   const dog = new Mcdonalds("老北京鸡肉卷", "5G炸鸡");
   dog.getFood(); // "老北京鸡肉卷"
   dog.getNewFood(); // "5G炸鸡"
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
+  }
+  var Mcdonalds = /*#__PURE__*/ (function (_KFC) {
+    _inheritsLoose(Mcdonalds, _KFC);
+
+    var _super = _createSuper(Mcdonalds);
+
+    function Mcdonalds(food, newFood) {
+      var _this;
+
+      _this = _KFC.call(this, food) || this;
+      _this.newFood = newFood;
+      return _this;
+    }
+
+    var _proto2 = Mcdonalds.prototype;
+
+    _proto2.getNewFood = function getNewFood() {
+      console.log(this.newFood);
+    };
+
+    return Mcdonalds;
+  })(KFC);
 </script>
