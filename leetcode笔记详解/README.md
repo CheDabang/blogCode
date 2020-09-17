@@ -120,6 +120,7 @@ var reverseLeftWords = function(s, n) {
 ```
 
 ## 重新排列数组(简单)
+
 给你一个数组 nums ，数组中有 2n 个元素，按 `[x1,x2,...,xn,y1,y2,...,yn]` 的格式排列。
 
 请你将数组按 `[x1,y1,x2,y2,...,xn,yn]` 格式重新排列，返回重排后的数组。
@@ -139,7 +140,7 @@ var reverseLeftWords = function(s, n) {
 ```
 输入：nums = [1,1,2,2], n = 2
 输出：[1,2,1,2]
-``` 
+```
 
 **提示：**
 - `1 <= n <= 500`
@@ -158,9 +159,12 @@ var shuffle = function(nums, n) {
 ```
 
 **解题思路**
+
 其实就相当于将一个2n的数组，先中间对半分成两个数组。然后依次按照左1右1左2右2...的格式合并成一个新的数组. 
 
-## 拥有最多糖果的孩子
+
+## 拥有最多糖果的孩子(简单)
+
 给你一个数组 candies 和一个整数 extraCandies ，其中 candies[i] 代表第 i 个孩子拥有的糖果数目。
 
 对每一个孩子，检查是否存在一种方案，将额外的 extraCandies 个糖果分配给孩子们之后，此孩子有 最多 的糖果。注意，允许有多个孩子同时拥有 最多 的糖果数目。
@@ -176,6 +180,7 @@ var shuffle = function(nums, n) {
 孩子 3 有 5 个糖果，他已经是拥有最多糖果的孩子。
 孩子 4 有 1 个糖果，即使他得到所有额外的糖果，他也只有 4 个糖果，无法成为拥有糖果最多的孩子。
 孩子 5 有 3 个糖果，如果他得到至少 2 个额外糖果，那么他将成为拥有最多糖果的孩子。
+
 ```
 
 **提示：**
@@ -184,7 +189,7 @@ var shuffle = function(nums, n) {
 - `1 <= candies[i] <= 100`
 - `1 <= extraCandies <= 50`
 
-**答案**
+**答案:**
 ```
 var kidsWithCandies = function(candies, extraCandies) {
     let result = [];
@@ -210,3 +215,71 @@ var kidsWithCandies = function(candies, extraCandies) {
 };
 ```
 Math.max代替我第一个for循环，然后`map`函数代替我第二个for循环。
+
+## 好数对的数目(简单)
+给你一个整数数组 nums 。
+
+如果一组数字 (i,j) 满足 nums[i] == nums[j] 且 i < j ，就可以认为这是一组 好数对 
+
+返回好数对的数目。
+
+**示例 1：**
+```
+输入：nums = [1,2,3,1,1,3]
+输出：4
+解释：有 4 组好数对，分别是 (0,3), (0,4), (3,4), (2,5) ，下标从 0 开始
+```
+**示例 2：**
+```
+输入：nums = [1,1,1,1]
+输出：6
+解释：数组中的每组数字都是好数对
+```
+**示例 3：**
+```
+输入：nums = [1,2,3]
+输出：0
+```
+
+**提示：**
+
+- `1 <= nums.length <= 100`
+- `1 <= nums[i] <= 100`
+
+**答案:**
+```
+var numIdenticalPairs = function(nums) {
+    let count = 0;
+    for(let i = 0; i < nums.length; i++) {
+        for(let j = i+1; j < nums.length; j++) {
+            if(nums[i] === nums[j]) {
+                count++;
+            }
+        }
+    }
+    return count;
+};
+```
+
+**解题思路:**
+我当时一看到这道题，就想到的是循环匹配，第一位和剩下的全匹配一遍。之后第二位匹配次数递减。
+当然还有一种思路，就是所谓的**双游标**，然后将上文中的两个嵌套for循环变成一个for循环
+```
+var numIdenticalPairs = function(nums) {
+    if (!nums.length) return 0
+    let count = 0
+    let j = 0
+    for (let i = 0; i < nums.length; j++) {
+        if (j === nums.length) i++, j = 0
+        i < j && nums[j] === nums[i] && count++
+    }
+    return count
+}
+
+```
+
+## LCP 01猜数字(简单)
+
+## 一堆数组的动态和(简单)
+
+## 区域和检索 - 数组不可变（简单）
