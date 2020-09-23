@@ -279,7 +279,140 @@ var numIdenticalPairs = function(nums) {
 ```
 
 ## LCP 01猜数字(简单)
+小A 和 小B 在玩猜数字。小B 每次从 1, 2, 3 中随机选择一个，小A 每次也从 1, 2, 3 中选择一个猜。他们一共进行三次这个游戏，请返回 小A 猜对了几次？
+
+输入的guess数组为 小A 每次的猜测，answer数组为 小B 每次的选择。guess和answer的长度都等于3。
+
+**示例 1：**
+```
+输入：guess = [1,2,3], answer = [1,2,3]
+输出：3
+解释：小A 每次都猜对了。
+```
+
+**示例 2：**
+```
+输入：guess = [2,2,3], answer = [3,2,1]
+输出：1
+解释：小A 只猜对了第二次。
+```
+
+**限制：**
+```
+guess的长度 = 3
+answer的长度 = 3
+guess的元素取值为 {1, 2, 3} 之一。
+answer的元素取值为 {1, 2, 3} 之一。
+```
+**答案:**
+```
+var game = function(guess, answer) {
+    let count = 0;
+    for(let i = 0; i < answer.length; i++) {
+        if(answer[i] === guess[i]) count++;
+    }
+    return count;
+};
+```
+
+**解题思路**
+其实考的对于数组的遍历匹配处理，我这边默认想到的for循环去解决。
+然后其实借鉴语法糖`filter`可以简化相关操作步骤：
+```
+var game = function(guess, answer) {
+    return answer.filter((cur, i) => cur === guess[i]).length;
+};
+```
 
 ## 一堆数组的动态和(简单)
+给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。
+
+请返回 nums 的动态和。
+
+**示例 1：**
+
+输入：nums = [1,2,3,4]
+输出：[1,3,6,10]
+解释：动态和计算过程为 [1, 1+2, 1+2+3, 1+2+3+4] 。
+
+**示例 2：**
+
+输入：nums = [1,1,1,1,1]
+输出：[1,2,3,4,5]
+解释：动态和计算过程为 [1, 1+1, 1+1+1, 1+1+1+1, 1+1+1+1+1] 。
+
+**示例 3：**
+
+输入：nums = [3,1,2,10,1]
+输出：[3,4,6,16,17]
+ 
+
+**提示：**
+
+1 <= nums.length <= 1000
+-10^6 <= nums[i] <= 10^6
+
+**答案**
+```
+var runningSum = function(nums) {
+   let newArr = [0];
+    for (let i = 0; i < nums.length; i++) {
+      newArr.push(newArr[i] + nums[i]);
+    }
+    newArr.shift();
+    return newArr;
+};
+
+```
+**解题思路**
+原理其实就是创建一个数组长度为1的数组，之后每次遍历吧最新的值push到里面，最后再对数组进行相关处理。
+当然后面还有一种思路：就是直接获得累计值之后，直接去替换原先的累加值
+```
+var runningSum = function(nums) {
+    for (let i = 1; i < nums.length; i++) {
+       nums[i] = nums[i - 1] + nums[i]
+    }
+    return nums;
+};
+```
 
 ## 区域和检索 - 数组不可变（简单）
+
+给定一个整数数组  nums，求出数组从索引 i 到 j  (i ≤ j) 范围内元素的总和，包含 i,  j 两点。
+
+**示例：**
+
+给定 nums = [-2, 0, 3, -5, 2, -1]，求和函数为 sumRange()
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+
+**说明:**
+
+- 你可以假设数组不可变。
+- 会多次调用 sumRange 方法。
+
+**答案**
+```
+var NumArray = function(nums) {
+    let dp = [0];
+    for(let i = 0; i<nums.length; i++) {
+        dp.push(dp[i]+nums[i]);
+    }
+    this.re = dp;
+};
+
+NumArray.prototype.sumRange = function(i, j) {
+    let re = this.re;
+    return re[j + 1]-re[i];
+};
+
+```
+
+**解题思路**
+这题最开始我想到是暴力循环遍历法，结果解答出来的时间总是非常慢。去看了别人解决思路，一下豁然开朗。
+因此此题说明的第二点提到过，会多次调用sumRange方法。 所以暴力解题法会非常慢，因此这里的思路就累加，这样就得到0 -> N区间的范围值。
+
+之后再用 `0 - j`范围值 - `0 - i` ， 通俗点就是取数值上整个大范围值 - 小范围值就可以得到想要的范围值， 不需要每次调用的时候，每次暴力求解。
+
