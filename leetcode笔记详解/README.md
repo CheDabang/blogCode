@@ -472,3 +472,62 @@ var sumOddLengthSubarrays = function(arr) {
 **解题思路**
 其实最主要的坑是好好读题，要去理解这道数学题。 审题花了不少的功夫, 读懂题之后，找到规律之后for循环遍历就可以了。
 其实就是针对这个长度的数组，一次递增截取某一端奇数范围的值，作为满足的条件，然后依次累加.
+
+## 1. 两数之和 （简单）
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+
+你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+
+ 
+
+**示例:**
+
+给定 nums = [2, 7, 11, 15], target = 9
+
+因为 nums[0] + nums[1] = 2 + 7 = 9
+所以返回 [0, 1]
+
+
+**解题思路1：**
+
+
+```
+var twoSum = function(nums, target) {
+  const arr = [];
+    for (let i = 0; i < nums.length; i++) {
+      let firstVal = nums[i];
+      let firstIndex = i;
+      for (let j = i + 1; j < nums.length; j++) {
+        let secondVal = nums[j];
+        let secondIndex = j;
+        if (firstVal + secondVal === target) {
+          arr[0] = firstIndex;
+          arr[1] = secondIndex;
+          return arr;
+        }
+      }
+    }
+};
+
+```
+此题解法很粗暴，暴力递归匹配法。 就是性能消耗比较高
+
+**解题思路2：**
+
+```
+var twoSum = function(nums, target) {
+    const prevNums = {};                    
+    for (let i = 0; i < nums.length; i++) { 
+        const curNum = nums[i];               
+        const targetNum = target - curNum;   
+        const targetNumIndex = prevNums[targetNum]; 
+        if (targetNumIndex !== undefined) {   
+            return [targetNumIndex, i];
+        } else {                              
+            prevNums[curNum] = i;               
+        }
+    }
+};
+```
+
+后面发现别人的一种解法， 利用对象的特性存储以前匹配检查的值和索引，避免的嵌套for循环匹配，从性能上来说方法2的性能要于前者。
