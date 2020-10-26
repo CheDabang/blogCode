@@ -707,3 +707,47 @@ var romanToInt = function(s) {
 };
 ```
 这题主要大致思路就是拆解字符串，然后根据字符串匹配去换算值. 
+
+## 14. 最长公共前缀
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+**示例 1:**
+
+输入: ["flower","flow","flight"]
+输出: "fl"
+
+**示例 2:**
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+说明:
+
+**所有输入只包含小写字母 a-z 。**
+
+**解题思路**
+```
+  var longestCommonPrefix = function (strs) {
+    if (strs.length < 1) return "";
+    let str = "";
+    for (let i = 0; i < strs[0].length; i++) {
+      let match = strs[0].slice(i, i + 1);
+      let bool = strs.every((str) => {
+        if(i > str.length ) return false;
+        return str.slice(i, i + 1) === match;
+      });
+      if (bool) {
+        str += match;
+      } else {
+        break;
+      }
+    }
+    return str
+  };
+```
+这题的思路，其实就是拿数组的第一个值作为样本值。之后利用数组`every`方法拿每一个元素和样本字母去匹配。
+我之前以为觉得需要找出最长的字符串或者最短的字符串，后面发现根本不需要找。直接随便取数组一个，只要后面循环遍历，一旦某个值索引超出长度，直接返回`false`,后面就不需要再循环遍历匹配了，直接结束。
+
+还有一个坑： 题目提示的时候，说`所有输入只包含小写字母 a-z`. 我就把某些情况忽略了，结果提交测试的时候发现，`[]`,`[""]`这些条件还会加入测试.加一些过滤条件即可.
