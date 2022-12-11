@@ -9,7 +9,7 @@
   "author": "CheDabang",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-favicon": "^2.0.1",
     "mongoose": "^4.13.19",
     "pug": "^2.0.4",
