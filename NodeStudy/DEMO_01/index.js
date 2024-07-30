@@ -14,6 +14,11 @@ let server = http.createServer();
 
 
 server.on('request', function (request, response) {
+    if (path.normalize(decodeURI(request.url)) !== decodeURI(request.url)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
   /**
    * response 对象有一个方法：write 可以用来给客户端发送响应数据
    * write 可以使用多次，但是最后一定要使用 end 来结束响应，否则客户端会一直等待 response.end()
